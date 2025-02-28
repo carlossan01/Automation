@@ -1,0 +1,29 @@
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+import time
+
+# Iniciar el navegador 
+navegador = webdriver.Chrome()
+
+# Abrir la aplicación
+navegador.get("https://wc-react-todo-app.netlify.app")
+
+# Buscar el campo de entrada y escribir una tarea
+campo_texto = navegador.find_element(By.TAG_NAME, "ADD TASK")
+campo_texto.send_keys("Comprar algo")
+ # Presionar Enter
+campo_texto.send_keys(Keys.RETURN) 
+
+# Tiempo sugerido para que la tarea se agregue (2 segundos)
+time.sleep(2)
+
+# Verificar que la tarea aparece en la lista
+task = navegador.find_element(By.CLASS_NAME, "todo-list")
+if "Comprar algo" in task.text:
+    print("La tarea se agregó correctamente.")
+else:
+    print("ERROR: La tarea no se agregó.")
+
+# Cerrar el navegador
+navegador.quit()
