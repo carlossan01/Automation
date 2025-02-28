@@ -1,29 +1,33 @@
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-import time
+# Importar desde Selenium para controlar el navegador
+from selenium import webdriver  
+# Encontrar elementos en la página
+from selenium.webdriver.common.by import By  
+# Usar teclas
+from selenium.webdriver.common.keys import Keys  
+# Para agregar tiempos 
+import time  
 
-# Iniciar el navegador 
-navegador = webdriver.Chrome()
+# Abrir el navegador predeterminador para uso
+navegador = webdriver.Chrome() 
+navegador.get("https://wc-react-todo-app.netlify.app") 
 
-# Abrir la aplicación
-navegador.get("https://wc-react-todo-app.netlify.app")
+ # Encuentra el botón para agregar tarea "ADD TASK"
+boton_agregar = navegador.find_element(By.XPATH, "//button[contains(text(),'Add Task')]") 
+boton_agregar.click()  
 
-# Buscar el campo de entrada y escribir una tarea
-campo_texto = navegador.find_element(By.TAG_NAME, "ADD TASK")
-campo_texto.send_keys("Comprar algo")
- # Presionar Enter
+# Escribir una tarea y presionar Enter
+campo_texto.send_keys("Comprar ALGO")  
 campo_texto.send_keys(Keys.RETURN) 
 
-# Tiempo sugerido para que la tarea se agregue (2 segundos)
-time.sleep(2)
+# Esperar un momento para que la tarea se agregue
+time.sleep(2)  # Espera 2 segundos
 
-# Verificar que la tarea aparece en la lista
-task = navegador.find_element(By.CLASS_NAME, "todo-list")
-if "Comprar algo" in task.text:
-    print("La tarea se agregó correctamente.")
+# Verificar si la tarea se agregó correctamente
+tareas = navegador.find_element(By.CLASS_NAME, "todo-list")  
+if "Comprar ALGO" in tareas.text:
+    print("✅ La tarea se agregó correctamente.")
 else:
-    print("ERROR: La tarea no se agregó.")
+    print("❌ ERROR: La tarea no se agregó.")
 
 # Cerrar el navegador
-navegador.quit()
+navegador.quit()  
